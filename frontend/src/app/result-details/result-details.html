@@ -1,0 +1,114 @@
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-gray-950 text-white pt-24 px-6">
+
+    <div class="max-w-3xl mx-auto">
+
+        <h1 class="text-4xl font-bold text-yellow-400 mb-8">
+            Test Details
+        </h1>
+
+        @if (loading()) {
+
+        <div class="text-gray-400">
+            Loading result...
+        </div>
+
+        } @else if (error()) {
+
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+
+            <p class="text-red-400 mb-4">
+                Unable to load this result.
+            </p>
+
+            <button (click)="goHistory()" class="px-5 py-2 bg-yellow-400 text-black rounded-lg font-semibold">
+                Back to History
+            </button>
+
+        </div>
+
+        } @else if (result()) {
+
+        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+
+            <div class="text-center mb-8">
+
+                <p class="text-gray-500">
+                    Words Per Minute
+                </p>
+
+                <p class="text-6xl font-bold text-yellow-400 mt-2">
+                    {{ result()!.wpm }}
+                </p>
+
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+
+                <div>
+                    <p class="text-gray-500 text-sm">Accuracy</p>
+                    <p class="text-2xl font-semibold mt-2">
+                        {{ result()!.accuracy }}%
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-sm">Duration</p>
+                    <p class="text-2xl font-semibold mt-2">
+                        {{ result()!.duration }}s
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-sm">Correct Characters</p>
+                    <p class="text-2xl font-semibold text-green-400 mt-2">
+                        {{ result()!.correctCharacters }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-sm">Incorrect Characters</p>
+                    <p class="text-2xl font-semibold text-red-400 mt-2">
+                        {{ result()!.incorrectCharacters }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-sm">Errors</p>
+                    <p class="text-2xl font-semibold mt-2">
+                        {{ result()!.errors }}
+                    </p>
+                </div>
+
+                <div>
+                    <p class="text-gray-500 text-sm">Date</p>
+                    <p class="text-lg font-semibold mt-2">
+                        {{ result()!.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="flex justify-center mt-8">
+
+            <button (click)="goHistory()"
+                class="px-6 py-3 bg-gray-900 border border-gray-700 rounded-lg hover:border-yellow-400 transition">
+                ← Back to History
+            </button>
+
+
+            <button (click)="deleteResult()"
+                class="px-6 py-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg hover:bg-red-500/20 transition">
+                Delete Result
+            </button>
+
+        </div>
+
+        }
+
+    </div>
+
+</div>

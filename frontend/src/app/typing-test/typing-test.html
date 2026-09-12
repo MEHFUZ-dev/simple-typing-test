@@ -1,0 +1,112 @@
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-gray-950 text-white pt-20 px-6">
+    <div class="max-w-5xl mx-auto">
+
+        <!-- Timer + Modes -->
+        <div class="flex flex-col items-center mb-12">
+
+            <div class="text-yellow-400 text-4xl font-mono font-bold mb-6">
+                {{ timeLeft() }}
+            </div>
+
+            <div class="flex items-center bg-gray-900 p-1 rounded-xl border border-gray-800">
+
+                <button (click)="selectTime(15)" [class.bg-yellow-400]="selectedTime() === 15"
+                    [class.text-black]="selectedTime() === 15"
+                    class="px-6 py-3 rounded-lg text-gray-400 hover:text-white transition">
+                    15s
+                </button>
+
+                <button (click)="selectTime(30)" [class.bg-yellow-400]="selectedTime() === 30"
+                    [class.text-black]="selectedTime() === 30"
+                    class="px-6 py-3 rounded-lg text-gray-400 hover:text-white transition">
+                    30s
+                </button>
+
+                <button (click)="selectTime(60)" [class.bg-yellow-400]="selectedTime() === 60"
+                    [class.text-black]="selectedTime() === 60"
+                    class="px-6 py-3 rounded-lg text-gray-400 hover:text-white transition">
+                    60s
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Typing Area -->
+        <div (click)="focusInput()" class="typing-container cursor-text relative">
+
+            <div class="typing-words">
+                @for (
+                word of words().slice(displayStart(), displayStart() + 30);
+                track $index;
+                let visibleIndex = $index
+                ) {
+                <span class="word" [class.word-incorrect]="
+    wordResults()[displayStart() + visibleIndex] === 'incorrect'
+  ">
+
+                    @for (
+                    char of word.split('');
+                    track $index;
+                    let charIndex = $index
+                    ) {
+                    <span [class]="getCharacterClass(displayStart() + visibleIndex, charIndex)">
+                        {{ char }}
+                    </span>
+                    }
+
+                    <!-- Extra characters typed beyond the word length -->
+                    @if (
+                    displayStart() + visibleIndex === currentWordIndex() &&
+                    typedText().length > word.length
+                    ) {
+                    @for (
+                    extra of typedText().slice(word.length).split('');
+                    track $index
+                    ) {
+                    <span class="char-incorrect">{{ extra }}</span>
+                    }
+                    }
+
+                </span>
+                }
+            </div>
+
+            <!-- Hidden input -->
+            <input #typingInput type="text" (input)="onInput($event)" (keydown)="onKeyDown($event)" autocomplete="off"
+                autocorrect="off" autocapitalize="off" spellcheck="false" class="hidden-input" />
+        </div>
+
+        <!-- Restart -->
+        <div class="flex items-center justify-center gap-10 mt-8">
+
+            <div class="text-center">
+                <div class="text-gray-500 text-sm uppercase tracking-wide">
+                    WPM
+                </div>
+
+                <div class="text-yellow-400 text-2xl font-bold">
+                    {{ wpm() }}
+                </div>
+            </div>
+
+            <div class="text-center">
+                <div class="text-gray-500 text-sm uppercase tracking-wide">
+                    Accuracy
+                </div>
+
+                <div class="text-white text-2xl font-bold">
+                    {{ accuracy() }}%
+                </div>
+            </div>
+
+            <button (click)="restartTest()"
+                class="px-6 py-3 rounded-xl bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-yellow-400 transition">
+                ↻ Restart
+            </button>
+
+        </div>
+
+    </div>
+</div>

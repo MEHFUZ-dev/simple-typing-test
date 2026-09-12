@@ -1,0 +1,128 @@
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-[#323437] text-white pt-24 px-6">
+
+  <div class="max-w-6xl mx-auto">
+
+    <h1 class="text-4xl font-bold text-yellow-400 mb-8">
+      Test History
+    </h1>
+
+    <div class="flex justify-center gap-2 mb-6">
+
+  <button
+    (click)="selectedDuration.set('all')"
+    class="px-4 py-2 rounded-lg">
+    All
+  </button>
+
+  <button
+    (click)="selectedDuration.set(15)"
+    class="px-4 py-2 rounded-lg">
+    15s
+  </button>
+
+  <button
+    (click)="selectedDuration.set(30)"
+    class="px-4 py-2 rounded-lg">
+    30s
+  </button>
+
+  <button
+    (click)="selectedDuration.set(60)"
+    class="px-4 py-2 rounded-lg">
+    60s
+  </button>
+
+</div>
+
+    @if (results().length === 0) {
+
+      <div class="bg-[#2c2e31] rounded-xl p-10 text-center">
+        <p class="text-gray-400 text-lg">
+          No typing tests yet.
+        </p>
+
+        <button
+          routerLink="/typing-test"
+          class="mt-5 px-6 py-3 bg-yellow-400 text-black rounded-lg font-semibold hover:bg-yellow-300">
+          Take a Test
+        </button>
+      </div>
+
+    } @else {
+
+      <div class="bg-[#2c2e31] rounded-xl overflow-hidden">
+
+        <div class="overflow-x-auto">
+
+          <table class="w-full text-left">
+
+            <thead class="bg-[#27292b] text-gray-400">
+
+              <tr>
+                <th class="px-6 py-4">Date</th>
+                <th class="px-6 py-4">WPM</th>
+                <th class="px-6 py-4">Accuracy</th>
+                <th class="px-6 py-4">Correct</th>
+                <th class="px-6 py-4">Incorrect</th>
+                <th class="px-6 py-4">Duration</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              @for (result of filteredResults(); track result.id) {
+
+                <tr class="border-t border-gray-700 hover:bg-[#36383b]">
+
+                  <td colspan="6" class="p-0">
+                    <a
+                      [routerLink]="['/result', result.id]"
+                      class="block grid grid-cols-6 items-center">
+
+                      <span class="px-6 py-4 text-gray-300">
+                        {{ result.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+                      </span>
+
+                      <span class="px-6 py-4 text-yellow-400 font-bold">
+                        {{ result.wpm }}
+                      </span>
+
+                      <span class="px-6 py-4">
+                        {{ result.accuracy }}%
+                      </span>
+
+                      <span class="px-6 py-4 text-green-400">
+                        {{ result.correctCharacters }}
+                      </span>
+
+                      <span class="px-6 py-4 text-red-400">
+                        {{ result.incorrectCharacters }}
+                      </span>
+
+                      <span class="px-6 py-4">
+                        {{ result.duration }}s
+                      </span>
+
+                    </a>
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

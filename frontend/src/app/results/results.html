@@ -1,0 +1,117 @@
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-[#323437] text-white flex items-center justify-center px-6">
+
+    <div class="w-full max-w-3xl">
+
+        <h1 class="text-4xl font-bold text-center text-yellow-400 mb-10">
+            Test Results
+        </h1>
+
+        @if (!isLoggedIn()) {
+
+        <div class="bg-[#2c2e31] rounded-xl p-4 mb-6 text-center">
+
+            <p class="text-gray-400">
+                Login to save your results and track your progress.
+            </p>
+
+            <div class="flex justify-center gap-3 mt-3">
+
+                <button routerLink="/login" class="px-4 py-2 text-yellow-400 hover:text-yellow-300">
+                    Login
+                </button>
+
+                <button routerLink="/register" class="px-4 py-2 bg-yellow-400 text-black rounded-lg font-semibold">
+                    Sign Up
+                </button>
+
+            </div>
+
+        </div>
+
+        }
+
+
+        <!-- Main WPM -->
+        <div class="bg-[#2c2e31] rounded-xl p-8 text-center mb-6">
+
+            <div class="text-gray-500 text-lg">
+                Words Per Minute
+            </div>
+
+            <div class="text-yellow-400 text-7xl font-bold mt-2">
+                {{ wpm }}
+            </div>
+
+        </div>
+
+
+        <!-- Statistics -->
+        <div class="grid grid-cols-2 gap-4">
+
+            <div class="bg-[#2c2e31] rounded-xl p-6">
+                <div class="text-gray-500">
+                    Accuracy
+                </div>
+
+                <div class="text-3xl font-bold mt-2">
+                    {{ accuracy }}%
+                </div>
+            </div>
+
+
+            <div class="bg-[#2c2e31] rounded-xl p-6">
+                <div class="text-gray-500">
+                    Duration
+                </div>
+
+                <div class="text-3xl font-bold mt-2">
+                    {{ duration }}s
+                </div>
+            </div>
+
+
+            <div class="bg-[#2c2e31] rounded-xl p-6">
+                <div class="text-gray-500">
+                    Correct Characters
+                </div>
+
+                <div class="text-3xl font-bold text-green-400 mt-2">
+                    {{ correct }}
+                </div>
+            </div>
+
+
+            <div class="bg-[#2c2e31] rounded-xl p-6">
+                <div class="text-gray-500">
+                    Incorrect Characters
+                </div>
+
+                <div class="text-3xl font-bold text-red-400 mt-2">
+                    {{ incorrect }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+        <div class="flex justify-center gap-4 mt-8">
+
+            <button (click)="restartTest()"
+                class="px-6 py-3 bg-yellow-400 text-black rounded-lg font-semibold hover:bg-yellow-300">
+                Restart Test
+            </button>
+
+
+            <button (click)="goDashboard()"
+                class="px-6 py-3 bg-[#2c2e31] border border-gray-600 rounded-lg font-semibold hover:border-yellow-400">
+                Dashboard
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

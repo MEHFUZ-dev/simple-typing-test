@@ -1,0 +1,21 @@
+# Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Spring Boot
+backend/backend/target/
+
+# Backend secrets
+backend/backend/src/main/resources/application.properties
+backend/backend/src/main/resources/.env
+
+# IDE
+.idea/
+.vscode/
+backend/backend/.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

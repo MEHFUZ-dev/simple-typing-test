@@ -1,0 +1,58 @@
+<nav class="absolute top-0 left-0 right-0 z-10">
+
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+
+        <!-- Logo -->
+        <a routerLink="/" class="text-2xl font-bold text-yellow-400">
+            TypeTest
+        </a>
+
+
+        <!-- Guest -->
+        @if (!isLoggedIn()) {
+
+        <div class="flex items-center gap-4">
+
+            <a routerLink="/login" class="text-gray-400 hover:text-yellow-400">
+                Login
+            </a>
+
+            <a routerLink="/register"
+                class="px-4 py-2 bg-yellow-400 text-black rounded-lg font-semibold hover:bg-yellow-300">
+                Sign Up
+            </a>
+
+        </div>
+
+        }
+
+
+        <!-- Logged In -->
+        @if (isLoggedIn()) {
+
+        <div class="flex items-center gap-4">
+
+            <a routerLink="/dashboard" class="text-gray-400 hover:text-yellow-400">
+                Dashboard
+            </a>
+
+            <a routerLink="/history" class="text-gray-400 hover:text-yellow-400">
+                History
+            </a>
+
+            <a routerLink="/profile" class="text-gray-400 hover:text-yellow-400">
+                Profile
+            </a>
+
+            <button (click)="logout()"
+                class="px-4 py-2 border border-gray-600 rounded-lg text-gray-300 hover:border-red-400 hover:text-red-400">
+                Logout
+            </button>
+
+        </div>
+
+        }
+
+    </div>
+
+</nav>
