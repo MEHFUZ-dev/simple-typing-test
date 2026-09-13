@@ -17,8 +17,8 @@ export interface UserProfile {
 })
 export class ProfileService {
 
-  private apiUrl = 'http://localhost:8080/api/auth/profile';
-
+  private apiUrl = 'https://simple-typing-test.onrender.com/api/auth';
+  
   constructor(private http: HttpClient) {}
 
   getProfile(): Observable<UserProfile> {
