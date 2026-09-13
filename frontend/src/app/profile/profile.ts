@@ -35,7 +35,7 @@ export class Profile implements OnInit {
   loadProfile(): void {
     this.profileService.getProfile().subscribe({
       next: (data) => {
-        this.profile.set(data);
+        this.profile.set(data as unknown as UserProfile);
       },
       error: (error) => {
         console.error('Failed to load profile:', error);

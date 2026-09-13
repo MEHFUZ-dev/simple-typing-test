@@ -31,33 +31,43 @@ export class Register {
   }
 
   onSubmit(): void {
-
   console.log('Register button clicked');
 
   if (this.registerForm.invalid) {
     console.log('Form is invalid');
-    console.log(this.registerForm.value);
     this.registerForm.markAllAsTouched();
     return;
   }
 
-  const { username, email, password } =
-    this.registerForm.getRawValue();
+  const { username, email, password } = this.registerForm.getRawValue();
 
-  console.log('Sending:', username, email, password);
+  this.authService.register(username!, email!, password!).subscribe({
+    next: () => {
+      console.log('REGISTRATION SUCCESS');
 
-  this.authService
-    .register(username!, email!, password!)
-    .subscribe({
-      next: (response) => {
-  console.log('REGISTRATION SUCCESS:', response);
+      // Automatically login after registration
+      this.authService.login(username!, password!).subscribe({
+        next: (token) => {
+          console.log('AUTO LOGIN SUCCESS');
 
-  this.router.navigate(['/typing-test']);
-},
-      error: (error) => {
-        console.error('REGISTER ERROR:', error);
-        alert('Registration failed. Check the console.');
-      }
-    });
+          this.authService.saveToken(token);
+
+          this.router.navigate(['/typing-test']);
+        },
+        error: (error) => {
+          console.error('AUTO LOGIN ERROR:', error);
+
+          // Registration succeeded, but automatic login failed
+          alert('Registration successful. Please login manually.');
+          this.router.navigate(['/login']);
+        }
+      });
+    },
+
+    error: (error) => {
+      console.error('REGISTER ERROR:', error);
+      alert('Registration failed. Check the console.');
+    }
+  });
 }
 }
