@@ -63,7 +63,6 @@ export class Login {
   }
 
   loginWithGoogle(): void {
-  window.location.href =
-    'http://localhost:8080/oauth2/authorization/google';
+  window.location.href = 'https://simple-typing-test.onrender.com/oauth2/authorization/google';
 }
 }

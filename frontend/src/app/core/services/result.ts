@@ -18,7 +18,7 @@ export interface TypingResult {
 })
 export class ResultService {
 
-  private apiUrl = 'http://localhost:8080/api/results';
+  private apiUrl = 'https://simple-typing-test.onrender.com/api/results';
 
   constructor(private http: HttpClient) {}
 

@@ -8,7 +8,7 @@ import { Navbar } from '../shared/navbar/navbar';
 @Component({
   selector: 'app-result-details',
   standalone: true,
-  imports: [Navbar, RouterLink, DatePipe],
+  imports: [Navbar, DatePipe],
   templateUrl: './result-details.html',
   styleUrl: './result-details.css'
 })
