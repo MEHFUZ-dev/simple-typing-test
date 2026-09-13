@@ -60,7 +60,7 @@ public class GoogleOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         String token = jwtService.generateToken(user.getUsername());
 
         response.sendRedirect(
-                "http://localhost:4200/?token=" + token
+                "https://simple-typing-test-sand.vercel.app/?token=" + token
         );
     }
 }
