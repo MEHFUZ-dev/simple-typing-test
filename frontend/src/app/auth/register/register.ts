@@ -31,10 +31,8 @@ export class Register {
   }
 
   onSubmit(): void {
-  console.log('Register button clicked');
 
   if (this.registerForm.invalid) {
-    console.log('Form is invalid');
     this.registerForm.markAllAsTouched();
     return;
   }
@@ -43,19 +41,17 @@ export class Register {
 
   this.authService.register(username!, email!, password!).subscribe({
     next: () => {
-      console.log('REGISTRATION SUCCESS');
 
       // Automatically login after registration
       this.authService.login(username!, password!).subscribe({
         next: (token) => {
-          console.log('AUTO LOGIN SUCCESS');
 
           this.authService.saveToken(token);
 
           this.router.navigate(['/typing-test']);
         },
         error: (error) => {
-          console.error('AUTO LOGIN ERROR:', error);
+   
 
           // Registration succeeded, but automatic login failed
           alert('Registration successful. Please login manually.');
@@ -65,7 +61,7 @@ export class Register {
     },
 
     error: (error) => {
-      console.error('REGISTER ERROR:', error);
+
       alert('Registration failed. Check the console.');
     }
   });

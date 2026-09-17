@@ -51,7 +51,6 @@ export class Results {
 
     this.resultService.saveResult(result).subscribe({
       next: (response) => {
-        console.log('Result saved:', response);
       },
       error: (error) => {
         console.error('Failed to save result:', error);

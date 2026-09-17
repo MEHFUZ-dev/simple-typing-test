@@ -45,8 +45,7 @@ export class Login {
       .login(username!, password!)
       .subscribe({
         next: (token) => {
-          console.log('LOGIN SUCCESS');
-          console.log('JWT:', token);
+
 
           this.authService.saveToken(token);
 
@@ -55,7 +54,7 @@ export class Login {
 
         error: (error) => {
 
-          console.error('LOGIN ERROR:', error);
+
 
           alert('Invalid username or password');
         }

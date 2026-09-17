@@ -90,7 +90,6 @@ export class Dashboard implements OnInit {
       },
 
       error: (error) => {
-        console.error('Failed to load dashboard data:', error);
       }
 
     });

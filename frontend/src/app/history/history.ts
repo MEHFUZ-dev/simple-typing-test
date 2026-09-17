@@ -45,14 +45,10 @@ export class History implements OnInit {
 
       next: (data) => {
 
-        console.log('Results received:', data);
 
         this.results.set(data);
 
-        console.log(
-          'Results count:',
-          this.results().length
-        );
+
 
       },
 
