@@ -49,7 +49,15 @@ export class TypingTest implements OnDestroy, AfterViewInit {
 
   currentWord = computed(() => this.words()[this.currentWordIndex()] ?? '');
 
-  displayStart = computed(() => Math.max(0, this.currentWordIndex() - 5));
+  displayStart = computed(() => {
+    const index = this.currentWordIndex();
+
+    if (index < 20) {
+      return 0;
+    }
+
+    return Math.floor(index / 10) * 10;
+  });
 
   typedText = signal('');
 
@@ -103,6 +111,8 @@ export class TypingTest implements OnDestroy, AfterViewInit {
   accuracy = signal(100);
 
   timerStarted = false;
+
+  private startedAt = 0;
 
   private finished = false;
 
@@ -186,6 +196,7 @@ export class TypingTest implements OnDestroy, AfterViewInit {
         return updated;
       });
 
+      // Remove old result if this word was previously completed
       // Remove old result if this word was previously completed
       const previousResult = this.wordResults()[currentIndex];
 
@@ -429,17 +440,16 @@ export class TypingTest implements OnDestroy, AfterViewInit {
 
     this.timerStarted = true;
 
+    this.startedAt = Date.now();
+
     this.timer = setInterval(() => {
 
       this.timeLeft.update(time => time - 1);
 
       this.calculateStats();
 
-
       if (this.timeLeft() <= 0) {
-
         this.finishTest();
-
       }
 
     }, 1000);
@@ -447,28 +457,31 @@ export class TypingTest implements OnDestroy, AfterViewInit {
   }
 
 
- calculateStats(): void {
-  const correct = this.correctCharacters();
-  const incorrect = this.incorrectCharacters();
-  const totalTyped = correct + incorrect;
+  calculateStats(): void {
+    const correct = this.correctCharacters();
+    const incorrect = this.incorrectCharacters();
+    const totalTyped = correct + incorrect;
 
-  const elapsedTime = this.selectedTime() - this.timeLeft(); // seconds
+    const elapsedTime =
+      this.timerStarted || this.finished
+        ? (Date.now() - this.startedAt) / 1000
+        : 0;
 
-  if (elapsedTime > 0) {
-    const minutes = elapsedTime / 60;
-    const calculatedWpm = (this.completedCorrectCharacters() / 5) / minutes;
-    this.wpm.set(Math.max(0, Math.round(calculatedWpm)));
-  } else {
-    this.wpm.set(0);
+    if (elapsedTime > 0) {
+      const minutes = elapsedTime / 60;
+      const calculatedWpm = (this.completedCorrectCharacters() / 5) / minutes;
+      this.wpm.set(Math.max(0, Math.round(calculatedWpm)));
+    } else {
+      this.wpm.set(0);
+    }
+
+    if (totalTyped > 0) {
+      const calculatedAccuracy = (correct / totalTyped) * 100;
+      this.accuracy.set(Math.max(0, Math.min(100, Math.round(calculatedAccuracy))));
+    } else {
+      this.accuracy.set(0);
+    }
   }
-
-  if (totalTyped > 0) {
-    const calculatedAccuracy = (correct / totalTyped) * 100;
-    this.accuracy.set(Math.max(0, Math.min(100, Math.round(calculatedAccuracy))));
-  } else {
-    this.accuracy.set(0);
-  }
-}
 
 
   finishTest(): void {
@@ -503,6 +516,7 @@ export class TypingTest implements OnDestroy, AfterViewInit {
 
     // Mark test as finished
     this.timerStarted = false;
+    this.startedAt = 0;
 
     // Go to results page
     this.router.navigate(['/results'], {
